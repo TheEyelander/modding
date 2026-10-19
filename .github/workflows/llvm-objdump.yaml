@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@main      
       - run: |
-          zstd -d *.zst
-          llvm-objdump-18 -d *.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
+          zstd -d libil2cpp.so.zst
+          llvm-objdump-18 -d libil2cpp.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
 
       - uses: actions/upload-artifact@main
         with:
