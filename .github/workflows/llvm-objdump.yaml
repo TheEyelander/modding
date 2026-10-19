@@ -11,8 +11,11 @@ jobs:
   llvm-objdump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - run: llvm-objdump-18 -d *.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
+      - uses: actions/checkout@main      
+      - run: |
+          zstd -d *.zst
+          llvm-objdump-18 -d *.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
+
       - uses: actions/upload-artifact@main
         with:
           archive: false
