@@ -1,0 +1,19 @@
+name: llvm-objdump
+on:
+  workflow_dispatch:
+    inputs:
+      start-address:
+        required: true
+      stop-address:
+        required: true
+
+jobs:
+  llvm-objdump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: llvm-objdump-18 -d *.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
+      - uses: actions/upload-artifact@main
+        with:
+          archive: false
+          path: llvm-objdump.txt
