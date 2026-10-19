@@ -1,4 +1,4 @@
-name: LLVM Obj Dump
+name: LLVM Objdump
 on:
   workflow_dispatch:
     inputs:
