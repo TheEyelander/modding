@@ -1,21 +1,28 @@
-name: llvm-objdump
+name: LLVM Object Dump
 on:
   workflow_dispatch:
     inputs:
       start-address:
+        description: Start address
         required: true
       stop-address:
+        description: Stop address
         required: true
 
 jobs:
   llvm-objdump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main      
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Run
+        run: |
           zstd -d libil2cpp.so.zst
           llvm-objdump-18 -d libil2cpp.so --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
-      - uses: actions/upload-artifact@main
+
+      - name: Upload
+        uses: actions/upload-artifact@main
         with:
           archive: false
           path: llvm-objdump.txt
