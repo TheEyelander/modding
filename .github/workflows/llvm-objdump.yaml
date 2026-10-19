@@ -14,8 +14,7 @@ jobs:
       - uses: actions/checkout@main      
       - run: |
           zstd -d libil2cpp.so.zst
-          llvm-objdump-18 -d libil2cpp.so --no-leading-addr -no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
-
+          llvm-objdump-18 -d libil2cpp.so --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" > llvm-objdump.txt
       - uses: actions/upload-artifact@main
         with:
           archive: false
