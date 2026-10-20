@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Run
         run: |
-          jadx="$(curl -fsSLOJ -w "%{filename_effective}" "https://github.com/skylot/jadx/releases/download/v1.5.6/jadx-1.5.6.zip"
+          jadx="$(curl -fsSLOJ -w "%{filename_effective}" "https://github.com/skylot/jadx/releases/download/v1.5.6/jadx-1.5.6.zip")"
           unzip -q "$jadx"
           
-          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}")"
           zstd -d "$input"
 
           ./bin/jadx \
