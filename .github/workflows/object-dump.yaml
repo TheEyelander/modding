@@ -1,4 +1,4 @@
-name: LLVM Objdump
+name: Object Dump
 on:
   workflow_dispatch:
     inputs:
@@ -13,7 +13,7 @@ on:
         required: true
 
 jobs:
-  llvm-objdump:
+  object-dump:
     runs-on: ubuntu-latest
     steps:
       - name: Run
@@ -21,10 +21,10 @@ jobs:
           input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}")"
           zstd -d "$input"
 
-          llvm-objdump-18 -d "${input%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
+          llvm-objdump-18 -d "${input%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > object-dump.txt
 
       - name: Upload
         uses: actions/upload-artifact@main
         with:
           archive: false
-          path: llvm-objdump.txt
+          path: object-dump.txt
