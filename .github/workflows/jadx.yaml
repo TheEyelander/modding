@@ -19,7 +19,7 @@ jobs:
           zstd -d "$input"
 
           ./bin/jadx \
-            -d jadx \
+            -d . \
             --show-bad-code \
             --fs-case-sensitive \
             --respect-bytecode-access-modifiers \
@@ -34,4 +34,6 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: jadx
-          path: jadx
+          path: |
+            resources
+            sources
