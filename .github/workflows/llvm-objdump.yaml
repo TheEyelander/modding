@@ -5,7 +5,7 @@ on:
       url:
         description: URL to the .so file
         required: true
-      start:
+      start-address:
         description: Start address
         required: true
       stop-address:
