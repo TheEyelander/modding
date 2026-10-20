@@ -19,6 +19,7 @@ jobs:
           zstd -d "$input"
 
           ./bin/jadx \
+            -d jadx \
             --show-bad-code \
             --fs-case-sensitive \
             --respect-bytecode-access-modifiers \
@@ -28,8 +29,6 @@ jobs:
             --no-inline-kotlin-lambda \
             "${input%.zst}" \
             || true
-
-          ls
 
       - name: Upload
         uses: actions/upload-artifact@main
