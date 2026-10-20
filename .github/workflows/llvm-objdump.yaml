@@ -2,7 +2,10 @@ name: LLVM Objdump
 on:
   workflow_dispatch:
     inputs:
-      start-address:
+      url:
+        description: URL to the .so file
+        required: true
+      start:
         description: Start address
         required: true
       stop-address:
@@ -13,13 +16,12 @@ jobs:
   llvm-objdump:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
-
       - name: Run
         run: |
-          zstd -d libil2cpp.so.zst
-          llvm-objdump-18 -d libil2cpp.so --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
+          curl -fsSLOJ "${{ inputs.url }}"
+          zstd -d *.so.zst
+
+          llvm-objdump-18 -d *.so --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
 
       - name: Upload
         uses: actions/upload-artifact@main
