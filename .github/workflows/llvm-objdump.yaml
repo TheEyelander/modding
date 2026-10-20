@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       url:
-        description: URL to the .so file
+        description: URL to the .so.zst file
         required: true
       start-address:
         description: Start address
@@ -18,10 +18,10 @@ jobs:
     steps:
       - name: Run
         run: |
-          curl -fsSLOJ "${{ inputs.url }}"
-          zstd -d *.so.zst
+          filename="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.url }}")"
 
-          llvm-objdump-18 -d *.so --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
+          zstd -d "$filename"
+          llvm-objdump-18 -d "${filename%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
 
       - name: Upload
         uses: actions/upload-artifact@main
