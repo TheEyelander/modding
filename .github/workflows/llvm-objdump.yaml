@@ -2,8 +2,8 @@ name: LLVM Objdump
 on:
   workflow_dispatch:
     inputs:
-      url:
-        description: URL to the .so.zst file
+      input_url:
+        description: Input URL
         required: true
       start-address:
         description: Start address
@@ -18,10 +18,10 @@ jobs:
     steps:
       - name: Run
         run: |
-          filename="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.url }}")"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}")"
+          zstd -d "$input"
 
-          zstd -d "$filename"
-          llvm-objdump-18 -d "${filename%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
+          llvm-objdump-18 -d "${input%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > llvm-objdump.txt
 
       - name: Upload
         uses: actions/upload-artifact@main
