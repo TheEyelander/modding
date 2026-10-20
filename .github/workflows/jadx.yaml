@@ -1,0 +1,37 @@
+name: JADX
+on:
+  workflow_dispatch:
+    inputs:
+      input_url:
+        description: Input URL
+        required: true
+
+jobs:
+  jadx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          jadx="$(curl -fsSLOJ -w "%{filename_effective}" "https://github.com/skylot/jadx/releases/download/v1.5.6/jadx-1.5.6.zip"
+          unzip -q "$jadx"
+          
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}"
+          zstd -d "$input"
+
+          ./bin/jadx \
+            --show-bad-code \
+            --fs-case-sensitive \
+            --respect-bytecode-access-modifiers \
+            --no-move-inner-classes \
+            --no-inline-anonymous \
+            --no-inline-methods \
+            --no-inline-kotlin-lambda \
+            "${input%.zst}"
+
+          ls
+
+      - name: Upload
+        uses: actions/upload-artifact@main
+        with:
+          name: jadx
+          path: jadx
