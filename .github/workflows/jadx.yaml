@@ -26,7 +26,8 @@ jobs:
             --no-inline-anonymous \
             --no-inline-methods \
             --no-inline-kotlin-lambda \
-            "${input%.zst}"
+            "${input%.zst}" \
+            || true
 
           ls
 
