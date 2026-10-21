@@ -3,7 +3,7 @@ run-name: Compress Videos (${{ inputs.max-resolution }}p${{ inputs.include-audio
 on:
   workflow_dispatch:
     inputs:
-      input_urls:
+      input-urls:
         description: Input URLs
         required: true
       cookies:
@@ -21,14 +21,14 @@ jobs:
   compress-videos:
     strategy:
       matrix:
-        input_url: ${{ fromJson(inputs.input_urls) }}
+        input-url: ${{ fromJson(inputs.input-urls) }}
     runs-on: ubuntu-latest
     steps:
       - name: Download FFmpeg
         run: curl -fsSL "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz" | tar -xJ -f -
 
       - name: Download video
-        run: printf "%s\n" "FILE=$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" "${{ matrix.input_url }}")" >> "$GITHUB_ENV"
+        run: printf "%s\n" "FILE=$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" "${{ matrix.input-url }}")" >> "$GITHUB_ENV"
 
       - name: Run
         run: |
