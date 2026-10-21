@@ -2,7 +2,7 @@ name: Object Dump
 on:
   workflow_dispatch:
     inputs:
-      input_url:
+      input-url:
         description: Input URL
         required: true
       start-address:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Run
         run: |
-          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input_url }}")"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
           zstd -d "$input"
 
           llvm-objdump-18 -d "${input%.zst}" --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" --stop-address="${{ inputs.stop-address }}" | sed -E 's/^[ \t]+//; s/[ \t]+/ /g' > object-dump.txt
