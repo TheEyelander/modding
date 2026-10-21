@@ -2,7 +2,7 @@ name: What
 on:
   workflow_dispatch:
     inputs:
-      input_url:
+      input-url:
         description: Input URL
         required: true
       cookies:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Run
         run: |
-          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" "${{ inputs.input_url }}")"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" "${{ inputs.input-url }}")"
           zip -qd "$input" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*"
           7z a -m0=lzma2 -mx=9 what.7z "$input"
 
