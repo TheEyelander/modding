@@ -1,0 +1,25 @@
+name: What
+on:
+  workflow_dispatch:
+    inputs:
+      input_url:
+        description: Input URL
+        required: true
+      cookies:
+        description: Cookies
+
+jobs:
+  what:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" "${{ inputs.input_url }}")"
+          zip -qd "$input" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*"
+          7z a -m0=lzma2 -mx=9 what.7z .
+
+      - name: Upload
+        uses: actions/upload-artifact@main
+        with:
+          archive: false
+          path: what.7z

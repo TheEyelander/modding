@@ -1,0 +1,22 @@
+name: Extract Boot Image
+on:
+  workflow_dispatch:
+    inputs:
+     fastboot-rom-url:
+        description: Fastboot ROM URL
+        required: true
+
+jobs:
+  extract-boot-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          curl -fsSL "${{ inputs.fastboot-rom-url }}" | tar -xz -f - --occurrence --wildcards "*/images/boot.img"
+          7z a -m0=lzma2 -mx=9 boot-image.7z .
+
+      - name: Upload
+        uses: actions/upload-artifact@v7
+        with:
+          archive: false
+          path: boot-image.7z
