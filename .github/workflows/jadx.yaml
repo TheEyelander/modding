@@ -28,12 +28,11 @@ jobs:
             --no-inline-methods \
             --no-inline-kotlin-lambda \
             "${input%.zst}" \
-            || true
+
+          7z a -m0=lzma2 -mx=9 jadx.7z resources sources
 
       - name: Upload
         uses: actions/upload-artifact@main
         with:
-          name: jadx
-          path: |
-            resources
-            sources
+          archive: false
+          path: jadx.7z
