@@ -16,7 +16,7 @@ jobs:
         run: |
           input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" "${{ inputs.input_url }}")"
           zip -qd "$input" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*"
-          7z a -m0=lzma2 -mx=9 what.7z .
+          7z a -m0=lzma2 -mx=9 what.7z "$input"
 
       - name: Upload
         uses: actions/upload-artifact@main

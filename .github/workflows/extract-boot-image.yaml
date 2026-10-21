@@ -13,7 +13,7 @@ jobs:
       - name: Run
         run: |
           curl -fsSL "${{ inputs.fastboot-rom-url }}" | tar -xz -f - --occurrence --wildcards "*/images/boot.img"
-          7z a -m0=lzma2 -mx=9 boot-image.7z .
+          7z a -m0=lzma2 -mx=9 boot-image.7z */images/boot.img
 
       - name: Upload
         uses: actions/upload-artifact@v7
