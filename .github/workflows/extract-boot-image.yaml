@@ -16,7 +16,7 @@ jobs:
           7z a -m0=lzma2 -mx=9 boot-image.7z */images/boot.img
 
       - name: Upload
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@main
         with:
           archive: false
           path: boot-image.7z
