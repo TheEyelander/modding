@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Run
         run: |
-          cpp2il="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
+          cpp2il="$(curl -fsSLOJ -w "%{filename_effective}" "https://github.com/TheEyelander/public/raw/main/Cpp2IL")"
           input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
 
           "./$cpp2il" --game-path "$input" --output-as isil
