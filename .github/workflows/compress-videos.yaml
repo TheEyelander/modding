@@ -57,11 +57,8 @@ jobs:
         with:
           merge-multiple: true
 
-      - name: Run
-        run: 7z a -m0=lzma2 -mx=9 compress-videos.7z .
-
       - name: Upload
         uses: actions/upload-artifact@main
         with:
-          archive: false
-          path: compress-videos.7z
+          name: compress-videos
+          path: .
