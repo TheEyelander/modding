@@ -1,4 +1,4 @@
-name: What
+name: Compress File
 on:
   workflow_dispatch:
     inputs:
@@ -9,16 +9,14 @@ on:
         description: Input cookies
 
 jobs:
-  what:
+  compress-file:
     runs-on: ubuntu-latest
     steps:
       - name: Run
-        run: |
-          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.input-cookies }}" "${{ inputs.input-url }}")"
-          zip -qd "$input" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*" || true
+        run: zip -qd "$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.input-cookies }}" "${{ inputs.input-url }}")" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*" || true
 
       - name: Upload
         uses: actions/upload-artifact@main
         with:
-          name: what
+          name: compress-file
           path: .
