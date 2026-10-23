@@ -5,8 +5,8 @@ on:
       input-url:
         description: Input URL
         required: true
-      cookies:
-        description: Cookies
+      input-cookies:
+        description: Input cookies
 
 jobs:
   what:
@@ -14,8 +14,9 @@ jobs:
     steps:
       - name: Run
         run: |
-          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.cookies }}" "${{ inputs.input-url }}")"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.input-cookies }}" "${{ inputs.input-url }}")"
           zip -qd "$input" "lib/armeabi-v7a/*" "lib/x86/*" "lib/x86_64/*" || true
+
           7z a -m0=lzma2 -mx=9 what.7z "$input"
 
       - name: Upload
