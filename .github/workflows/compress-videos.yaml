@@ -64,4 +64,4 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           archive: false
-          path: compressed-videos.7z
+          path: compress-videos.7z
