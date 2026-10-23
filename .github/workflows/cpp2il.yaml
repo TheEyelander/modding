@@ -1,0 +1,24 @@
+name: CPP2IL
+on:
+  workflow_dispatch:
+    inputs:
+      input-url:
+        description: Input URL
+        required: true
+
+jobs:
+  cpp2il:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          cpp2il="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
+
+          "./$cpp2il" --game-path "$input" --output-as isil
+
+      - name: Upload
+        uses: actions/upload-artifact@main
+        with:
+          name: cpp2il
+          path: cpp2il_out
