@@ -1,0 +1,22 @@
+name: Names
+on:
+  workflow_dispatch:
+    inputs:
+      input-url:
+        description: Input URL
+        required: true
+
+jobs:
+  names:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          input="$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")"
+          llvm-nm-18 -a -f posix "$input" > names.txt
+
+      - name: Upload
+        uses: actions/upload-artifact@main
+        with:
+          archive: false
+          path: names.txt
