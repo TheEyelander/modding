@@ -1,8 +1,8 @@
-name: Build LuaJIT
+name: Build LuaJIT ARM64
 on: workflow_dispatch
 
 jobs:
-  build-luajit:
+  build-luajit-arm64:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@main
         with: 
-          name: luajit
+          name: build-luajit-arm64
           path: |
             libluajit.a
             libluajit.so
