@@ -1,10 +1,5 @@
 name: Disassemble Symbols
-on:
-  workflow_dispatch:
-    inputs:
-      stuff:
-        description: Stuff
-        required: true
+on: workflow_dispatch
 
 jobs:
   disassemble-symbols:
@@ -13,7 +8,7 @@ jobs:
       - name: Disassemble symbols
         run: |
           curl -fsSLOJ -w "%{filename_effective}" "https://github.com/TheEyelander/public/releases/download/roblox/libroblox.so"
-          llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn ${{ inputs.stuff }} libroblox.so | grep -B 2 -A 4 "#0xf2c" > "${{ github.job }}.txt"
+          llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn libroblox.so | grep -B 2 -A 4 "#0xf2c" > "${{ github.job }}.txt"
 
       - name: Upload
         uses: actions/upload-artifact@main
