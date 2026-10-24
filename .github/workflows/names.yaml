@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run
-        run: llvm-nm-18 -a -f posix "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > names.txt
+        run: llvm-nm-18 -D -f posix "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > names.txt
 
       - name: Upload
         uses: actions/upload-artifact@main
