@@ -2,18 +2,18 @@ name: Disassemble Symbols
 on:
   workflow_dispatch:
     inputs:
-      input-url:
-        description: Input URL
+      stuff:
+        description: Stuff
         required: true
-      extra-arguments:
-        description: Extra arguments
 
 jobs:
   disassemble-symbols:
     runs-on: ubuntu-latest
     steps:
       - name: Disassemble symbols
-        run: llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn ${{ inputs.extra-arguments }} "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > "${{ github.job }}.txt"
+        run: |
+          curl -fsSLOJ -w "%{filename_effective}" "https://github.com/TheEyelander/public/releases/download/roblox/libroblox.so"
+          llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn ${{ inputs.stuff }} libroblox.so | grep -B 2 -A 4 "#0xf2c" > "${{ github.job }}.txt"
 
       - name: Upload
         uses: actions/upload-artifact@main
