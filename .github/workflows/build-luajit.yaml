@@ -13,10 +13,14 @@ jobs:
       - name: Build LuaJIT
         run: |
           bin="$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
-          make amalg libluajit.a \
+          cc="$bin/aarch64-linux-android21-clang"
+
+          make amalg \
             BUILDMODE=static \
-            STATIC_CC="$bin/aarch64-linux-android21-clang" \
-            TARGET_AR="$bin/llvm-ar rcus"
+            STATIC_CC="$cc" \
+            TARGET_LD="$cc" \
+            TARGET_AR="$bin/llvm-ar rcus" \
+            TARGET_STRIP="$bin/llvm-strip"
 
       - name: Upload
         uses: actions/upload-artifact@main
