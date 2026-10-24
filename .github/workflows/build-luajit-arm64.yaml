@@ -25,7 +25,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@main
         with: 
-          name: build-luajit-arm64
+          name: ${{ github.job }}
           path: |
             src/libluajit.a
             src/libluajit.so
