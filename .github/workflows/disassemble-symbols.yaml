@@ -8,7 +8,7 @@ jobs:
       - name: Disassemble symbols
         run: |
           curl -fsSLOJ -w "%{filename_effective}" "https://github.com/TheEyelander/public/releases/download/roblox/libroblox.so"
-          llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn libroblox.so | grep -B 2 -A 4 "#0xf2c" > "${{ github.job }}.txt"
+          llvm-objdump-18 -d libroblox.so | grep -B 10 -A 15 "0x3af000"
 
       - name: Upload
         uses: actions/upload-artifact@main
