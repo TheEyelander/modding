@@ -30,7 +30,7 @@ jobs:
       - name: Download video
         run: printf "%s\n" "INPUT=$(curl -fsSLOJ -w "%{filename_effective}" -b "${{ inputs.input-cookies }}" -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" "${{ matrix.input-url }}")" >> "$GITHUB_ENV"
 
-      - name: Run
+      - name: Compress video
         run: |
           ./*/bin/ffmpeg \
             -i "$INPUT" \
