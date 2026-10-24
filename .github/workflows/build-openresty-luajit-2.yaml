@@ -19,7 +19,7 @@ jobs:
 
           make clean
           make amalg \
-            HOST="gcc -m32" \
+            HOST_CC="gcc -m32" \
             STATIC_CC="$cc" \
             DYNAMIC_CC="$cc -fPIC" \
             TARGET_LD="$cc" \
@@ -36,7 +36,7 @@ jobs:
 
           make clean
           make amalg \
-            HOST="gcc" \
+            HOST_CC="gcc" \
             STATIC_CC="$cc" \
             DYNAMIC_CC="$cc -fPIC" \
             TARGET_LD="$cc" \
