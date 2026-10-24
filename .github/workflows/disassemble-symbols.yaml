@@ -1,5 +1,5 @@
 name: Disassemble Symbols
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 
 jobs:
   disassemble-symbols:
