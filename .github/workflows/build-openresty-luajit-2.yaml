@@ -10,10 +10,11 @@ jobs:
         with:
           repository: openresty/luajit2
 
+      - name: Install gcc-multilib
+        run: sudo apt-get install gcc-multilib
+
       - name: Build OpenResty's LuaJIT 2 (armeabi-v7a)
         run: |
-          sudo apt-get install gcc-multilib
-
           bin="$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
           cc="$bin/armv7a-linux-androideabi21-clang"
 
