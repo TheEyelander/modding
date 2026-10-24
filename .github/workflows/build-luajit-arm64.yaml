@@ -27,5 +27,5 @@ jobs:
         with: 
           name: build-luajit-arm64
           path: |
-            libluajit.a
-            libluajit.so
+            src/libluajit.a
+            src/libluajit.so
