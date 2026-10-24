@@ -5,19 +5,15 @@ on:
       input-url:
         description: Input URL
         required: true
-      start-address:
-        description: Start address
-        required: true
-      stop-address:
-        description: Stop address
-        required: true
+      extra-arguments:
+        description: Extra arguments
 
 jobs:
   disassemble-symbols:
     runs-on: ubuntu-latest
     steps:
       - name: Disassemble symbols
-        run: llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn --start-address="${{ inputs.start-address }}" stop-address="${{ inputs.stop-address }}" "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > "${{ github.job }}.txt"
+        run: llvm-objdump-18 -d --no-leading-addr --no-show-raw-insn ${{ inputs.extra-arguments }} "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > "${{ github.job }}.txt"
 
       - name: Upload
         uses: actions/upload-artifact@main
