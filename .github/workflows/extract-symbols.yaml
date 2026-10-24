@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Extract symbols
-        run: llvm-nm-18 -D -f posix "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > extract-symbols.txt
+        run: llvm-nm-18 -D -f posix "$(curl -fsSLOJ -w "%{filename_effective}" "${{ inputs.input-url }}")" > "${{ github.job }}.txt"
 
       - name: Upload
         uses: actions/upload-artifact@main
         with:
           archive: false
-          path: extract-symbols.txt
+          path: ${{ github.job }}.txt
